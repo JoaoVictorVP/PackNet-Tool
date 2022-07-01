@@ -1,9 +1,14 @@
-﻿namespace PackNet;
+﻿using Typin;
+
+namespace PackNet;
 
 internal class Program
 {
-    static void Main(string[] args)
+    static async Task<int> Main()
     {
-        Console.WriteLine("Hello, World!");
+        return await new CliApplicationBuilder()
+            .AddCommandsFromThisAssembly()
+            .Build()
+            .RunAsync();
     }
 }
