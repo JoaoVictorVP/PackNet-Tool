@@ -1,4 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using PackNet.Contracts.Services;
+using PackNet.Core.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +16,7 @@ public class Startup : ICliStartup
 {
     public void ConfigureServices(IServiceCollection services)
     {
-        
+        services.AddSingleton<IFileService, FileService>();
     }
 
     public void Configure(CliApplicationBuilder app)
