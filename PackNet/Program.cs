@@ -2,12 +2,12 @@
 
 namespace PackNet;
 
-internal class Program
+public class Program
 {
     static async Task<int> Main()
     {
         return await new CliApplicationBuilder()
-            .AddCommandsFromThisAssembly()
+            .UseStartup<Startup>()
             .Build()
             .RunAsync();
     }
