@@ -1,0 +1,19 @@
+// Initialize and add package to project
+
+packnet init
+
+packnet source add "Packages" "http://packages.com"
+
+packnet add Wings -p ""
+
+
+----------------------
+// Send package to repository
+
+packnet push "MyPackage" -s "Packages"
+
+----------------------
+// Update installed packages version
+
+packnet update
+

@@ -1,14 +1,11 @@
-﻿using Typin;
+﻿using PackNet;
 
-namespace PackNet;
-
-public class Program
+var builder = ConsoleApp.CreateBuilder(args);
+builder.ConfigureServices(services =>
 {
-    static async Task<int> Main()
-    {
-        return await new CliApplicationBuilder()
-            .UseStartup<Startup>()
-            .Build()
-            .RunAsync();
-    }
-}
+    Startup.AddServices(services);
+});
+
+var app = builder.Build();
+app.AddAllCommandType();
+app.Run();

@@ -14,11 +14,7 @@ using Typin.Exceptions;
 
 namespace PackNet.Core.Commands.Init;
 
-[Command("init", Description = "Initialize PackNet package manager for this solution", Manual = @"Creates a folder called 'Nuget/' that will store downloaded packages, and '.packnet' wich will store configs.
-Will create a file called 'nuget.config' too for registering the package source. If one already exist then it will be just edited.
-
-* Need a solution file in initialization directory.")]
-public class InitCommand : ICommand
+public class InitCommand : ConsoleAppBase
 {
     private readonly IFileService _fileService;
 
@@ -27,16 +23,18 @@ public class InitCommand : ICommand
         _fileService = fileService;
     }
 
-    public ValueTask ExecuteAsync(IConsole console)
+    [Command("init", "Initialize PackNet package manager for this solution", Manual = @"Creates a folder called 'Nuget/' that will store downloaded packages, and '.packnet' wich will store configs.
+Will create a file called 'nuget.config' too for registering the package source. If one already exist then it will be just edited.
+
+* Need a solution file in initialization directory.")]
+    public void Init()
     {
         var sln = _fileService.Search("*.sln");
         if (sln is "")
-            throw new CommandException("No solution file found", showHelp: true);
+            throw new Exception("No solution file found");
         InitializeDirectories();
         InitializeConfigs();
         InitializeDatabase();
-
-        return ValueTask.CompletedTask;
     }
     static void InitializeDirectories()
     {
@@ -80,7 +78,7 @@ public class InitCommand : ICommand
     }
     static void InitializeDatabase()
     {
-        _ = new LiteDatabase("filename=.packnet/repos.db")
+        new LiteDatabase("filename=.packnet/repos.db")
             .Dispose();
     }
 }
